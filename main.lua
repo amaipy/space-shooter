@@ -30,15 +30,19 @@ function love.load()
     mediumFont = love.graphics.newFont('/fonts/m5x7.ttf', 32)
     largeFont = love.graphics.newFont('/fonts/m5x7.ttf', 48)
     sounds = {
-        ['paddle_hit'] = love.audio.newSource('/sounds/paddle_hit.wav', 'static'),
-        ['point_scored'] = love.audio.newSource('/sounds/point_scored.wav', 'static'),
-        ['wall_hit'] = love.audio.newSource('/sounds/wall_hit.wav', 'static')
+        ['enemy_hit'] = love.audio.newSource('/sounds/enemy_hit.wav', 'static'),
+        ['ship_hit'] = love.audio.newSource('/sounds/ship_hit.wav', 'static'),
+        ['laser'] = love.audio.newSource('/sounds/laser.wav', 'static'),
+        ['main_theme'] = love.audio.newSource('/sounds/main_theme.wav', 'static')
     }
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGTH, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         vsync = true,
         resizable = true
     })
+    sounds['main_theme']:setVolume(0.1)
+    sounds['main_theme']:setLooping(true)
+    sounds['main_theme']:play()
     love.keyboard.keysPressed = {}
     love.keyboard.keysReleased = {}
 end

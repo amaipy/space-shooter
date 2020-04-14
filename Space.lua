@@ -49,7 +49,7 @@ function Space:behaviorEnemy(dt, enemy, offsetX)
         enemy.speedX = ENEMY_SPEED - offsetX
         enemy.state = 'walking'
         enemy.animation = enemy.animations['walking']
-    elseif self.ship.y - enemy.x < 0 then 
+    elseif self.ship.x - enemy.x < 0 then 
         enemy.speedX = -ENEMY_SPEED + offsetX
         enemy.state = 'walking'
         enemy.animation = enemy.animations['walking']
@@ -76,6 +76,7 @@ function Space:update(dt)
                     self.ship.shots[key].state = 'collision'
                     self.ship.shots[key].animation = self.ship.shots[key].animations['collision']
                     USER_SCORE = USER_SCORE + 20
+                    sounds['enemy_hit']:play()
                     table.remove(self.enemies, key2)
                 end
             end
@@ -85,6 +86,7 @@ function Space:update(dt)
                 if enemy.shots[key].state == 'idle' and enemy.shots[key]:detectCollision(self.ship) then
                     enemy.shots[key].state = 'collision'
                     enemy.shots[key].animation = enemy.shots[key].animations['collision']
+                    sounds['ship_hit']:play()
                     SHIP_LIVES = SHIP_LIVES - 1
                 end
             end

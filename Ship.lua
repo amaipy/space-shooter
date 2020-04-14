@@ -33,6 +33,7 @@ function Ship:init()
             end
             if love.keyboard.wasPressed('space') then
                 table.insert(self.shots, Shot('up', self.x,self.y - SHIP_HEIGHT))
+                sounds['laser']:play()
             end
         end,
         ['walking'] = function(dt)
@@ -51,6 +52,7 @@ function Ship:init()
             end
             if love.keyboard.wasPressed('space') then
                 table.insert(self.shots, Shot('up', self.x , self.y - SHIP_HEIGHT))
+                sounds['laser']:play()
             end
         end
     }
