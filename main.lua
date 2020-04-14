@@ -24,7 +24,7 @@ SHIP_LIVES = 5
 HIGHEST_SCORE = 0
 
 function love.load()
-    love.window.setTitle('space-shooter')
+    love.window.setTitle('Spacecrest')
     love.window.setIcon(love.image.newImageData('/graphics/icon.png') )
     smallFont = love.graphics.newFont('/fonts/m5x7.ttf', 16)
     mediumFont = love.graphics.newFont('/fonts/m5x7.ttf', 32)
