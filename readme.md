@@ -6,6 +6,8 @@ Your score depends on how many enemies you destroy.
 You die if your lives, which starts at five, reaches zero. 
 You can reset the game when it ends by pressing R.  
 
+![](game.gif)
+
 Free Assets used and modified:
 https://ravenmore.itch.io/pixel-space-shooter-assets
 https://ansimuz.itch.io/spaceship-shooter-environment
