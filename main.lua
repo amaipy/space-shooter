@@ -2,7 +2,7 @@ WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
 VIRTUAL_WIDTH = 432
-VIRTUAL_HEIGTH = 243
+VIRTUAL_HEIGHT = 243
 
 math.randomseed(os.time())
 love.graphics.setDefaultFilter("nearest", "nearest")
@@ -12,7 +12,6 @@ push = require 'push'
 
 require 'Animation'
 require 'GameObj'
-require 'AnimatedGameObj'
 require 'Shot'
 require 'Ship'
 require 'Enemy'
@@ -22,20 +21,20 @@ space = Space()
 
 USER_SCORE = 0
 SHIP_LIVES = 5 
+HIGHEST_SCORE = 0
 
 function love.load()
     love.window.setTitle('space-shooter')
     love.window.setIcon(love.image.newImageData('/graphics/icon.png') )
     smallFont = love.graphics.newFont('/fonts/m5x7.ttf', 16)
     mediumFont = love.graphics.newFont('/fonts/m5x7.ttf', 32)
-    largeFont = love.graphics.newFont('/fonts/m5x7.ttf', 48)
     sounds = {
         ['enemy_hit'] = love.audio.newSource('/sounds/enemy_hit.wav', 'static'),
         ['ship_hit'] = love.audio.newSource('/sounds/ship_hit.wav', 'static'),
         ['laser'] = love.audio.newSource('/sounds/laser.wav', 'static'),
         ['main_theme'] = love.audio.newSource('/sounds/main_theme.wav', 'static')
     }
-    push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGTH, WINDOW_WIDTH, WINDOW_HEIGHT, {
+    push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         vsync = true,
         resizable = true
@@ -80,7 +79,6 @@ function love.keypressed(key)
     if key == 'r' and SHIP_LIVES == 0 then
         space:reset()
     end
-
     love.keyboard.keysPressed[key] = true
 end
 
@@ -90,7 +88,6 @@ end
 
 function love.draw()
     push:apply('start')
-    love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
     love.graphics.setDefaultFilter("nearest", "nearest")
     space:render()
     if SHIP_LIVES <= 0 then
@@ -98,7 +95,7 @@ function love.draw()
         love.graphics.printf("Game Over! Press R to restart", 0, 50, VIRTUAL_WIDTH, 'center')    
     else
         love.graphics.setFont(smallFont)
-        love.graphics.printf("Score: " .. USER_SCORE .. " Lives: " .. SHIP_LIVES , 0, 50, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Score: " .. USER_SCORE .. "  High Score: " .. HIGHEST_SCORE .. "  Lives: " .. SHIP_LIVES , 0, 50, VIRTUAL_WIDTH, 'center')
     end
     push:apply('end')
 

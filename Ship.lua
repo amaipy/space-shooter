@@ -1,11 +1,11 @@
-Ship = Class {__includes = AnimatedGameObj}
+Ship = Class {__includes = GameObj}
 
 local SHIP_SPEED = 200
 local SHIP_HEIGHT = 24
 local SHIP_WIDTH = 16
 
 function Ship:init()
-    AnimatedGameObj.init(self, 'ship', SHIP_WIDTH, SHIP_HEIGHT)
+    GameObj.init(self, 'ship', SHIP_WIDTH, SHIP_HEIGHT)
     self.animations = {
         ['idle'] = Animation(self.tiles, 1, 2, 0.05),
         ['left'] = Animation(self.tiles, 3, 4, 0.05),
@@ -21,12 +21,10 @@ function Ship:init()
             if love.keyboard.isDown('left') then
                 self.speedX = -SHIP_SPEED
                 self.state = 'walking'
-                self.animations['left']:restart()
                 self.animation = self.animations['left']
             elseif love.keyboard.isDown('right') then
                 self.speedX = SHIP_SPEED
                 self.state = 'walking'
-                self.animations['right']:restart()
                 self.animation = self.animations['right']
             else
                 self.speedX = 0
@@ -37,15 +35,11 @@ function Ship:init()
             end
         end,
         ['walking'] = function(dt)
-            local moved = false
             if love.keyboard.isDown('left') then
                 self.speedX = -SHIP_SPEED
-                moved = true
             elseif love.keyboard.isDown('right') then
                 self.speedX = SHIP_SPEED
-                moved = true
-            end
-            if not moved then
+            else
                 self.speedX = 0
                 self.state = 'idle'
                 self.animation = self.animations['idle']
@@ -61,7 +55,7 @@ end
 
 
 function Ship:update(dt)
-    AnimatedGameObj.update(self, dt)
+    GameObj.update(self, dt)
     for key, shot in pairs(self.shots) do
         if self.shots[key].destruct  or self.shots[key].y < -10 then
             table.remove(self.shots, key)

@@ -6,18 +6,11 @@ function Animation:init(tilesQuad, quadStart, quadEnd, interval)
     self.quadStart = quadStart
     self.quadEnd = quadEnd
     self.timer = 0
-    self.secondTimer = false
     self.currentFrame = quadStart
 end
 
 function Animation:getCurrentFrame()
     return self.tilesQuad[(self.currentFrame)]
-end
-
-function Animation:restart()
-    self.timer = 0
-    self.currentFrame = self.quadStart
-    self.secondTimer = false
 end
 
 function Animation:update(dt)

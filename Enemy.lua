@@ -1,11 +1,11 @@
-Enemy = Class {__includes = AnimatedGameObj}
+Enemy = Class {__includes = GameObj}
 
-ENEMY_SPEED = 60
+ENEMY_SPEED = 120
 ENEMY_HEIGHT = 16
 ENEMY_WIDTH = 16
 
-function Enemy:init(x, interval)
-    AnimatedGameObj.init(self, 'enemy', ENEMY_WIDTH, ENEMY_HEIGHT)
+function Enemy:init(x)
+    GameObj.init(self, 'enemy', ENEMY_WIDTH, ENEMY_HEIGHT)
     self.animations = {
         ['idle'] = Animation(self.tiles, 1, 1, 0.1),
         ['walking'] = Animation(self.tiles, 1, 4, 0.1)
@@ -14,7 +14,6 @@ function Enemy:init(x, interval)
     self.animation = self.animations['idle']
     self.shots = {}
     self.limit = 1
-    self.interval = interval
     self.currentFrame = self.animation:getCurrentFrame()
     self.behaviors = {
         ['idle'] = function(dt)
@@ -33,9 +32,9 @@ function Enemy:shot(dt)
 end
 
 function Enemy:update(dt)
-    AnimatedGameObj.update(self, dt)
+    GameObj.update(self, dt)
     for key, shot in pairs(self.shots) do
-        if self.shots[key].destruct  or self.shots[key].y > VIRTUAL_HEIGTH then
+        if self.shots[key].destruct  or self.shots[key].y > VIRTUAL_HEIGHT then
             table.remove(self.shots, key)
         else
             self.shots[key]:update(dt) 

@@ -1,4 +1,4 @@
-Shot = Class {__includes = AnimatedGameObj}
+Shot = Class {__includes = GameObj}
 
 local SHOT_SPEED = 500
 
@@ -13,7 +13,7 @@ function Shot:init(orientation, x, y)
         tile_end = 7 
         name = 'sh_shot'
     end
-    AnimatedGameObj.init(self, name, SHOT_WIDTH, shot_height)
+    GameObj.init(self, name, SHOT_WIDTH, shot_height)
     self.animations = {
         ['idle'] = Animation(self.tiles, 1, 2, 1),
         ['collision'] = Animation(self.tiles, 3, tile_end, 0.1)
