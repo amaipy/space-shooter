@@ -7,7 +7,7 @@ function Animation:init(tilesQuad, quadStart, quadEnd, interval)
     self.quadEnd = quadEnd
     self.timer = 0
     self.secondTimer = false
-    self.currentFrame = 1
+    self.currentFrame = quadStart
 end
 
 function Animation:getCurrentFrame()
@@ -16,7 +16,7 @@ end
 
 function Animation:restart()
     self.timer = 0
-    self.currentFrame = 1 + self.quadStart
+    self.currentFrame = self.quadStart
     self.secondTimer = false
 end
 

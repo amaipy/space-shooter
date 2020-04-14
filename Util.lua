@@ -2,7 +2,6 @@
 function loadSpritesheet(sheet, tileWidth, tileHeight)
     local sheetWidth  = sheet:getWidth() / tileWidth
     local sheetHeight = sheet:getHeight() / tileHeight
-
     local sheetCounter = 1
     local quads = {}
 

@@ -12,14 +12,16 @@ push = require 'push'
 
 require 'Animation'
 require 'GameObj'
-require 'Space'
+require 'AnimatedGameObj'
+require 'Shot'
 require 'Ship'
 require 'Enemy'
+require 'Space'
+
 
 space = Space()
-ship = Ship()
 
-enemy = Enemy()
+USER_SCORE = 0
 
 function love.load()
     
@@ -36,13 +38,14 @@ function love.load()
         ['wall_hit'] = love.audio.newSource('/sounds/wall_hit.wav', 'static')
     }
 
-
-
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGTH, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         vsync = true,
         resizable = true
     })
+
+    love.keyboard.keysPressed = {}
+    love.keyboard.keysReleased = {}
 end
 
 function love.resize(w, h)
@@ -51,30 +54,62 @@ end
 
 
 function love.update(dt)
-    ship:update(dt)
-    enemy:update(dt)
+    space:update(dt)
+    love.keyboard.keysPressed = {}
+    love.keyboard.keysReleased = {}
 end
 
+-- global key pressed function
+function love.keyboard.wasPressed(key)
+    if (love.keyboard.keysPressed[key]) then
+        return true
+    else
+        return false
+    end
+end
 
+-- global key released function
+function love.keyboard.wasReleased(key)
+    if (love.keyboard.keysReleased[key]) then
+        return true
+    else
+        return false
+    end
+end
+
+-- called whenever a key is pressed
 function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     end
+    if key == 'r' and space.shipLives == 0 then
+        space.shipLives = 5
+        USER_SCORE = 0
+        space:insertEnemies()
+        space.ship.shots = {}
+    end
+
+    love.keyboard.keysPressed[key] = true
 end
+
+-- called whenever a key is released
+function love.keyreleased(key)
+    love.keyboard.keysReleased[key] = true
+end
+
 
 function love.draw()
     push:apply('start')
-
     love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
     love.graphics.setDefaultFilter("nearest", "nearest")
-    love.graphics.setFont(smallFont)
-    love.graphics.printf("Welcome to Pong!", 0, 20, VIRTUAL_WIDTH, 'center')
-    love.graphics.printf("Press Enter to Play", 0, 32, VIRTUAL_WIDTH, 'center')
-
     space:render()
-    ship:render()
-
-    enemy:render()
+    if space.shipLives <= 0 then
+        love.graphics.setFont(mediumFont)
+        love.graphics.printf("Game Over! Press R to restart", 0, 50, VIRTUAL_WIDTH, 'center')    
+    else
+        love.graphics.setFont(smallFont)
+        love.graphics.printf("Score: " .. USER_SCORE .. " Lives: " .. space.shipLives , 0, 50, VIRTUAL_WIDTH, 'center')
+    end
     push:apply('end')
 
 end
