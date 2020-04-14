@@ -13,10 +13,16 @@ function Space:insertEnemies()
     end
 end
 
+function Space:reset()
+    self.ship.shots = {}
+    SHIP_LIVES = 5
+    USER_SCORE = 0
+    self:insertEnemies()
+end
+
 function Space:init()
     GameObj.init(self, 'background', SPRITE_WIDTH, SPRITE_HEIGHT, MAP_WIDTH, MAP_HEIGHT)
     self.ship = Ship()
-    self.shipLives = 5
     self:insertEnemies()
 end    
 
@@ -55,7 +61,7 @@ function Space:behaviorEnemy(dt, enemy, offsetX)
 end
 
 function Space:update(dt)
-    if self.shipLives > 0 then
+    if SHIP_LIVES > 0 then
         if #self.enemies == 0 then
             self:insertEnemies()
         end
@@ -66,7 +72,7 @@ function Space:update(dt)
         end
         for key, shot in pairs(self.ship.shots) do
             for key2, enemy in pairs(self.enemies) do
-                if self.ship.shots[key]:detectCollision(enemy) then
+                if self.ship.shots[key].state == 'idle' and self.ship.shots[key]:detectCollision(enemy) then
                     self.ship.shots[key].state = 'collision'
                     self.ship.shots[key].animation = self.ship.shots[key].animations['collision']
                     USER_SCORE = USER_SCORE + 20
@@ -76,10 +82,10 @@ function Space:update(dt)
         end
         for key2, enemy in pairs(self.enemies) do
             for key, shot in pairs(enemy.shots) do
-                if enemy.shots[key]:detectCollision(self.ship) then
+                if enemy.shots[key].state == 'idle' and enemy.shots[key]:detectCollision(self.ship) then
                     enemy.shots[key].state = 'collision'
                     enemy.shots[key].animation = enemy.shots[key].animations['collision']
-                    self.shipLives = self.shipLives - 1
+                    SHIP_LIVES = SHIP_LIVES - 1
                 end
             end
         end

@@ -1,13 +1,12 @@
 AnimatedGameObj = Class{__includes = GameObj}
 
-function AnimatedGameObj:init(fileName, width, height, offsetX, offsetY)
+function AnimatedGameObj:init(fileName, width, height)
     GameObj.init(self, fileName, width, height, width, height)
     self.animations = {}
     self.state = 'idle'
     self.offsetX = offsetX
     self.offsetY = offsetY
     self.x = 0 
-    self.x = 0
     self.y = 0
     self.speedX = 0
     self.speedY = 0

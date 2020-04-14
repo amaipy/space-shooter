@@ -5,7 +5,7 @@ local SHIP_HEIGHT = 24
 local SHIP_WIDTH = 16
 
 function Ship:init()
-    AnimatedGameObj.init(self, 'ship', SHIP_WIDTH, SHIP_HEIGHT, 0, 0)
+    AnimatedGameObj.init(self, 'ship', SHIP_WIDTH, SHIP_HEIGHT)
     self.animations = {
         ['idle'] = Animation(self.tiles, 1, 2, 0.05),
         ['left'] = Animation(self.tiles, 3, 4, 0.05),

@@ -5,7 +5,7 @@ ENEMY_HEIGHT = 16
 ENEMY_WIDTH = 16
 
 function Enemy:init(x, interval)
-    AnimatedGameObj.init(self, 'enemy', ENEMY_WIDTH, ENEMY_HEIGHT, 3, 4)
+    AnimatedGameObj.init(self, 'enemy', ENEMY_WIDTH, ENEMY_HEIGHT)
     self.animations = {
         ['idle'] = Animation(self.tiles, 1, 1, 0.1),
         ['walking'] = Animation(self.tiles, 1, 4, 0.1)
@@ -28,7 +28,7 @@ end
 
 function Enemy:shot(dt)
     if #self.shots < self.limit then
-        table.insert(self.shots, Shot('down', self.x,self.y))
+        table.insert(self.shots, Shot('down', self.x, self.y))
     end
 end
 
