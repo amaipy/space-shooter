@@ -1,5 +1,6 @@
 # Spacecrest
-Spacecrest is a LÖVE game created for CS50x 2020 final project assignment. 
+Spacecrest is a LÖVE game created for CS50x 2020 final project assignment.
+
 In this game you control a spacecraft that can shoot laser beams (by pressing
 space) to destroy the alien enemies, who are trying to kill you by firing lasers too.
 When all enemies are destroyed, new ones appear randomly.
@@ -8,6 +9,8 @@ You die if your lives, which starts at five, reaches zero.
 You can reset the game when it ends by pressing R.  
 
 ![](game.gif)
+
+## Specifications
 
 Free Assets used and modified:
 
